@@ -2,11 +2,11 @@ name: Docker Image CI
 
 on:
   push:
-  #  branches: [ "development" ]
+    branches: [ "${{ github.repository }}" ]
   pull_request:
-  #  branches: [ "development" ]
+    branches: [ "${{ github.repository }}" ]
   workflow_dispatch:
-  #  branches: [ "development" ]
+    branches: [ "${{ github.repository }}" ]
 
 jobs:
 
