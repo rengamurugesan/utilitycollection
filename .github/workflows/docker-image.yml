@@ -2,11 +2,11 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "${{ github.repository }}" ]
+  #  branches: [ "${{ github.repository }}" ]
   pull_request:
-    branches: [ "${{ github.repository }}" ]
+  #  branches: [ "${{ github.repository }}" ]
   workflow_dispatch:
-    branches: [ "${{ github.repository }}" ]
+  #  branches: [ "${{ github.repository }}" ]
 
 jobs:
 
@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - run: echo "Deploying to production server on branch $GITHUB_REF"
-    - run: echo "Deploying to production server on branch "${{ github.repository }}"
+    - run: echo "Deploying to production server on branch "${{ github.repository }}""
 
     - name: Checkout the default branch 
       uses: actions/checkout@v3
