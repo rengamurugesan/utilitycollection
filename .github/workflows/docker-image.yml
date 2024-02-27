@@ -36,4 +36,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}:${{ github.run_id }}
+        tags: ${{ github.repository }}:${{ github.run_id }}
