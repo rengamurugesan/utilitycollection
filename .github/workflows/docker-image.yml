@@ -45,3 +45,18 @@ jobs:
     steps:
        - run: echo "Analizing the code"
        - run: echo "It is a test job"
+
+  
+  Development:
+    name: Deploy to Dev
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: "Development"
+    #   url: ${ { steps.deploy-to-webapp.outputs.webapp-url } }
+
+    steps:
+      - run: echo "Deploy into Dev enviro"
+      - run: echo "This is deployment  job"
