@@ -60,3 +60,46 @@ jobs:
     steps:
       - run: echo "Deploy into Dev enviro"
       - run: echo "This is deployment  job"
+  
+  Staging:
+    name: Deploy to Stg
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: Development
+    environment:
+      name: "Staging"
+    #   url: ${ { steps.deploy-to-webapp.outputs.webapp-url } }
+
+    steps:
+      - run: echo "Deploy into STG enviro"
+      - run: echo "This is deployment  job"
+  
+  Production:
+    name: Deploy to Production
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: Staging
+    environment:
+      name: "Production"
+    #   url: ${ { steps.deploy-to-webapp.outputs.webapp-url } }
+
+    steps:
+      - run: echo "Deploy into PROD enviro"
+      - run: echo "This is deployment  job"
+  
+  DR:
+    name: Deploy to DR
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: Production
+    environment:
+      name: "DR"
+    #   url: ${ { steps.deploy-to-webapp.outputs.webapp-url } }
+
+    steps:
+      - run: echo "Deploy into DR enviro"
+      - run: echo "This is deployment  job"
+  
