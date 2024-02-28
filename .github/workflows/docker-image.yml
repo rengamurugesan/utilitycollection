@@ -38,7 +38,7 @@ jobs:
         push: true
         tags: ${{ github.repository }}:${{ github.run_id }}
       
-    - run: docker run  ${{ github.repository }}:${{ github.run_id }}
+ 
 
 
   Analysis:
