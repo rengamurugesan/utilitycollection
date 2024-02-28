@@ -37,3 +37,11 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ github.repository }}:${{ github.run_id }}
+
+
+  Analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+       - run: echo "Analizing the code"
+       - run: echo "It is a test job"
