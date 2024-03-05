@@ -34,8 +34,8 @@ jobs:
         run:  |        
           
           echo "$(pwd)"  
-          cd "$(pwd)/$(WORKINGDIR) "        
-          echo $(GITHUB_WORKSPACE)/$(WORKINGDIR)          
+          cd "$(WORKINGDIR) "        
+          echo $(pwd)          
           
           
       
