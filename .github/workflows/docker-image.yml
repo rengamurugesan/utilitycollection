@@ -1,9 +1,9 @@
 name: Docker Image CI
 
 on:
-  push:
+  #push:
   #  branches: [ "${{ github.repository }}" ]
-  pull_request:
+  #pull_request:
   #  branches: [ "${{ github.repository }}" ]
   workflow_dispatch:
   #  branches: [ "${{ github.repository }}" ]
