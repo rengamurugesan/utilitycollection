@@ -54,17 +54,20 @@ jobs:
       - name: 'Terraform init'
         id: init
         run: |
-          
+          cd "infra" 
+          echo $(pwd) 
           terraform init          
 
       - name: 'Terraform plan'
         id: plan
         run: |
-          
+          cd "infra" 
+          echo $(pwd) 
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
-          
+          cd "infra" 
+          echo $(pwd) 
           terraform apply -auto-approve          
