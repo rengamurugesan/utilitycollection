@@ -34,7 +34,7 @@ jobs:
         run:  |        
           
           echo "$(pwd)"  
-          cd "$(WORKINGDIR) "        
+          cd "infra"        
           echo $(pwd)          
           
           
