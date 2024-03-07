@@ -6,6 +6,6 @@ provider "azurerm" {
   tenant_id                  = var.tenantId
   client_secret              = var.client_secret
   skip_provider_registration = true
-  #use_oidc                   = true
+  use_oidc                   = true
  
 }
