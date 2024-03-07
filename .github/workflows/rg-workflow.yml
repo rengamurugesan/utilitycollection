@@ -61,12 +61,12 @@ jobs:
           
           
       
-      # - uses: azure/login@v2
-      #   with:
-      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
-      #     # client-id: ${{ secrets.AZURE_CLIENT_ID }}
-      #     # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      #     # subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - uses: azure/login@v2
+        with:
+          #creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           #enable-AzPSSession: true
       
       - name: Setup Terraform
@@ -85,7 +85,8 @@ jobs:
       - name: 'Terraform init'
         id: init
         run: |      
-          terraform init  --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
+          terraform init  
+     # --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
      # Validate terraform files
       - name: Terraform Validate
         run: terraform validate
