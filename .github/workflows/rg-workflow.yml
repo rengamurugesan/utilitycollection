@@ -79,9 +79,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: 'Terraform init'
         id: init
-        run: |
-          cd "infra" 
-          echo $(pwd) 
+        run: |      
           terraform init --backend-config=${{ inputs.backend-config }} --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
      
 
