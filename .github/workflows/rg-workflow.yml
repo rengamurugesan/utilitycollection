@@ -17,9 +17,9 @@ on:
       var-file:
         required: true
         type: string
-      backend-config:
-        required: true
-        type: string
+      # backend-config:
+      #   required: true
+      #   type: string
       environment:
         required: true
         type: string
@@ -80,7 +80,7 @@ jobs:
       - name: 'Terraform init'
         id: init
         run: |      
-          terraform init --backend-config=${{ inputs.backend-config }} --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
+          terraform init --backend-config=backend/backend_config_dev.tfvars --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
      
 
       - name: 'Terraform plan'
