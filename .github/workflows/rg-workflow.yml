@@ -69,6 +69,11 @@ jobs:
           # subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           #enable-AzPSSession: true
       
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        # with:
+        #   terraform_version: 1.4.6
+        #   terraform_wrapper: false
       # - name: Azure CLI script
       #   uses: azure/CLI@v1
       #   with:
@@ -81,18 +86,22 @@ jobs:
         id: init
         run: |      
           terraform init  --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
-     
+     # Validate terraform files
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
 
       - name: 'Terraform plan'
         id: plan
-        run: |
-          cd "infra" 
+        run: |        
           echo $(pwd) 
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
-          cd "infra" 
           echo $(pwd) 
           terraform apply -auto-approve          
