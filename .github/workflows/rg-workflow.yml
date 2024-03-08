@@ -105,12 +105,11 @@ jobs:
 
       - name: 'Terraform plan'
         id: plan
-        run: |        
-          echo $(pwd) 
-          terraform plan --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}" --backend-config="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
+        run: | 
+          terraform plan -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
                     
       - name: 'Terraform apply'
         id: apply
         run: |
           echo $(pwd) 
-          terraform apply -auto-approve --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}" --backend-config="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"       
+          terraform apply -auto-approve -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
