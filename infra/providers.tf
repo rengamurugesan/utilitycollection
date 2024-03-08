@@ -1,4 +1,3 @@
-
 provider "azurerm" {
   features {}
   client_id                  = var.clientId
