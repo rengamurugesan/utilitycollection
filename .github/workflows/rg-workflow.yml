@@ -1,16 +1,32 @@
 # This is a basic workflow to help you get started with Actions
 
-name: rg-connectivity-001
+name: rg-creation
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     paths:
-      - '/UtilityCollection/infra/*.tf'
+    - '/UtilityCollection/infra/*.tf'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+  workflow_call:
+     inputs:
+      var-file:
+        required: true
+        type: string
+      # backend-config:
+      #   required: true
+      #   type: string
+      environment:
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,39 +35,82 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
-    name: 'rg-connectivity-001'
+    name: 'rg-creation'
     env:
       # CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       # CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       # SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION  }}
       # TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: UtilityCollection/infra
+      WORKINGDIR: infra
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: infra
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - name: 'Working Directory'
-        run: cd ${{ WORKING_DIR }}
       
-      - uses: azure/login@v1
+      # - name: 'Working Directory'
+      #   run:  |
+      #     echo "$(pwd)"  
+      #     cd "infra"        
+      #     echo $(pwd) 
+      #     ls        
+          
+          
+      
+      - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          auth-type: SERVICE_PRINCIPAL
+          enable-AzPSSession: true          
+          # client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          #subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        # with:
+        #   terraform_version: 1.4.6
+        #   terraform_wrapper: false
+      # - name: Azure CLI script
+      #   uses: azure/CLI@v1
+      #   with:
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       az account show
 
       # Runs a single command using the runners shell
       - name: 'Terraform init'
         id: init
-        run: |
-          
-          terraform init          
+        run: |      
+          terraform init
+        env:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client_secret : ${{ secrets.AZURE_CLIENT_SECRET }} 
+           
+     # --backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" --backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
+     # Validate terraform files
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
 
       - name: 'Terraform plan'
         id: plan
-        run: |
-          
+        run: |        
+          echo $(pwd) 
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
-          
+          echo $(pwd) 
           terraform apply -auto-approve          
