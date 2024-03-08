@@ -1,5 +1,5 @@
 
-provider "azuread" {
+provider "azurerm" {
   features {}
   client_id                  = var.clientId
   subscription_id            = var.subscriptionId
