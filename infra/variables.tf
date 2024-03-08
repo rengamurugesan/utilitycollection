@@ -30,3 +30,6 @@ variable "environment" {
 variable "clientId" {
   type = string
 }
+variable "client_secret" {
+  type = string
+}
