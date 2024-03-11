@@ -111,5 +111,4 @@ jobs:
       - name: 'Terraform apply'
         id: apply
         run: |
-          echo $(pwd) 
           terraform apply -auto-approve -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
